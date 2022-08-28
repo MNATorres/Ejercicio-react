@@ -9,6 +9,7 @@ function App() {
       <ChakraProvider>
         <Header />
       </ChakraProvider>
+        
     </div>
   );
 }
