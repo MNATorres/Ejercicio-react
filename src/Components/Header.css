@@ -1,0 +1,14 @@
+.contenedorHeader{
+    width: 100%;
+    background-color: rgb(4, 76, 219);
+    color: white;
+    padding: 20px 40px;
+    
+  }
+
+  .active{
+    font-weight: bold;
+    color: red;
+    text-decoration:underline;
+  }
+  
