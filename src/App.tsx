@@ -4,7 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import Header from './Components/Header'
 import {Route, Routes} from 'react-router-dom';
 import TableUsers from './Pages/TableUsers';
-import ListUsers from './Pages/ListUsers';
+import Form from './Pages/Form';
 import NotFoundPage from './Pages/NotFoundPage';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
 
       <Routes>
       <Route path='/' element={<TableUsers />} />
-      <Route path='users' element={<ListUsers />} />
+      <Route path='form' element={<Form />} />
       <Route path='*' element={<NotFoundPage />} />
       </Routes>
 

@@ -39,7 +39,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }
   
   
-
 export default function TableUsers() {
     return (
         <div style={{padding:"30px 15px"}} className="table">

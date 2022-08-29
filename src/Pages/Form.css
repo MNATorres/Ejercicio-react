@@ -1,0 +1,54 @@
+.form{
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
+
+.formulario{
+    background-color: brown;
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+    width: 400px;
+}
+
+.formulario div{
+    display: flex;
+    justify-content: space-between;
+    color: black;
+}
+
+.formulario div p{
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+}
+
+.form h1{
+    font-weight: bold;
+    color: black;
+}
+
+input{
+    margin-right: 0 50px;
+    cursor: pointer;
+}
+
+.formulario button{
+    margin-top: 17px;
+    background-color: azure;
+    color: black;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.formulario button:hover{
+    background-color: blue;
+    color: white;
+}
