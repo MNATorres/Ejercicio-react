@@ -1,12 +1,13 @@
 import { stringify } from "querystring";
 import React, { useState } from "react";
 import './Form.css';
+import Element from '../Components/Element';
 
 export default function Form() {
 
 
     const [text, setText] = useState("");
-    const [list, setList] = useState<{title: string, id: number, value: boolean}[]>([{
+    const [list, setList] = useState<{ title: string, id: number, value: boolean }[]>([{
         title: '',
         id: 0,
         value: false
@@ -17,7 +18,7 @@ export default function Form() {
     }
 
     let handleAdd = () => {
-        setList([...list, {title: text, id: Math.random(), value: true }])
+        setList([...list, { title: text, id: Math.random(), value: true }])
         setText("");
     }
 
@@ -39,11 +40,10 @@ export default function Form() {
             </form>
             <div className="dataForm">
                 <ul>
-                    {list.map((data) => {
-                        return ( 
-                         <li style={{color: 'black'}} key={data.id}>
-                            {data.title}
-                        </li>
+                    {list.map((element) => {
+                        return (
+                            <Element
+                                text={element.title} title={undefined} id={0} />
                         );
                     })}
                 </ul>
