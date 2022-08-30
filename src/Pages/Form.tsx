@@ -1,53 +1,144 @@
-import { stringify } from "querystring";
 import React, { useState } from "react";
-import './Form.css';
-import Element from '../Components/Element';
+import "./Form.css";
+import Element from "../Components/Element";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+
+type User = { text: string; value: boolean; id: number; date: Date };
+type UserFormData = {
+  name: string;
+  isAdult: boolean;
+  date: Date | null;
+};
 
 export default function Form() {
+  const [formData, setFormData] = useState<UserFormData>({
+    name: "",
+    isAdult: false,
+    date: null
+  });
 
+  const [list, setList] = useState<User[]>([]);
 
-    const [text, setText] = useState("");
-    const [list, setList] = useState<{ title: string, id: number, value: boolean }[]>([{
-        title: '',
-        id: 0,
-        value: false
-    }]);
+  let handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, name: e.currentTarget.value });
+  };
 
-    let setup = (e: { currentTarget: { value: React.SetStateAction<string>; }; }) => {
-        setText(e.currentTarget.value);
+  let handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, isAdult: e.currentTarget.checked });
+  };
+
+  let handleDateChange = (newDate: Date | null) => {
+    setFormData({ ...formData, date: newDate });
+  };
+
+  let handleAdd = () => {
+    if (!formData.date) return;
+    setList([
+      ...list,
+      {
+        text: formData.name,
+        id: Math.random(),
+        value: formData.isAdult,
+        date: formData.date
+      }
+    ]);
+    setFormData({
+      name: "",
+      isAdult: false,
+      date: null
+    });
+  };
+
+  let handleReset = () => {
+    setList([]);
+  };
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14
     }
+  }));
 
-    let handleAdd = () => {
-        setList([...list, { title: text, id: Math.random(), value: true }])
-        setText("");
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover
+    },
+    // hide last border
+    "&:last-child td, &:last-child th": {
+      border: 0
     }
+  }));
 
-    let handleReset = () => {
-        setList([])
-    }
-
-    console.log(text)
-
-    return (
-        <div className="form">
-            <h1>Complete los campos</h1>
-            <form className="formulario" onSubmit={(e) => e.preventDefault()}>
-                <div><input value={text} onChange={setup} type="text" placeholder="Write here..." /><p>Nombre</p></div>
-                <div><input type="checkbox" name="edad" /><p>Es mayor de edad?</p></div>
-                <div><input type="date" name="date" /><p>Fecha de nacimiento</p></div>
-                <button onClick={handleAdd}>Submit</button>
-                <button onClick={handleReset}>Reset</button>
-            </form>
-            <div className="dataForm">
-                <ul>
-                    {list.map((element) => {
-                        return (
-                            <Element
-                                text={element.title} title={undefined} id={0} />
-                        );
-                    })}
-                </ul>
-            </div>
+  return (
+    <div className="form">
+      <h1>Complete los campos</h1>
+     
+      <form className="formulario" onSubmit={e => e.preventDefault()}>
+        <div>
+          <input
+            value={formData.name}
+            onChange={handleNameChange}
+            type="text"
+            placeholder="Write here..."
+          />
+          <p>Nombre</p>
         </div>
-    )
+        <div>
+          <input
+            onChange={handleCheckboxChange}
+            checked={formData.isAdult}
+            type="checkbox"
+            name="edad"
+          />
+          <p>Es mayor de edad?</p>
+        </div>
+        <div>
+          <DatePicker
+            selected={formData.date}
+            onChange={handleDateChange}
+          />
+          <p>Fecha de nacimiento</p>
+        </div>
+        <button onClick={handleAdd}>Submit</button>
+        <button onClick={handleReset}>Reset</button>
+      </form>
+      <div className="dataForm">
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>NOMBRE</StyledTableCell>
+                <StyledTableCell align="right">
+                  ¿ES MAYOR DE EDAD?
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  FECHA DE NACIMIENTO
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {list.map(({ text, id, value, date}) => {
+                return <Element title={text} id={id} isAdult={value} date={date} />;
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+     
+    </div>
+  );
 }

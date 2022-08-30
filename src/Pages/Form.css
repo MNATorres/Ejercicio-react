@@ -5,7 +5,8 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    color: white;
+    color: black;
+    
 }
 
 .formulario{
@@ -15,14 +16,19 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 250px;
+    
     width: 400px;
+    margin-bottom: 20px;
 }
 
-.formulario div{
-    display: flex;
+.formulario > div{
+    margin: 7px;
+    padding: 4px;
+    border: solid 1px black;
     justify-content: space-between;
     color: black;
+    border-radius: 8px;
+    background-color: rgb(77, 6, 6);
 }
 
 .formulario div p{
@@ -49,6 +55,6 @@ input{
 }
 
 .formulario button:hover{
-    background-color: blue;
+    background-color:rgb(77, 6, 6);
     color: white;
 }

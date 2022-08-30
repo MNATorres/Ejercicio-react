@@ -1,17 +1,49 @@
 import React, { ReactNode } from "react";
+import { styled } from '@mui/material/styles';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 
-type Props = {
-    title: ReactNode;
+
+type ElementProps = {
+    title: string;
     id: number;
-    text: string;
+    isAdult: boolean;
+    date: Date;
 }
 
-export default function Element(text: Props, id: Props) {
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
+  
+ 
+
+const Element: React.FC<ElementProps> = ({title, id, isAdult, date}) => {
+    
     return (
-        <div className="element">
-            <li style={{ color: 'black' }} key={id.id}>
-                {text.title}
-            </li>
-        </div>
+
+        <StyledTableRow key={id}>
+              <StyledTableCell component="th" scope="row">
+                {title}
+              </StyledTableCell>
+              <StyledTableCell align="right">{isAdult}</StyledTableCell>
+              <StyledTableCell align="right">{date.toISOString()}</StyledTableCell>
+            </StyledTableRow>
     )
 }
+export default Element
