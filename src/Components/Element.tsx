@@ -7,7 +7,7 @@ import TableRow from '@mui/material/TableRow';
 type ElementProps = {
     title: string;
     id: number;
-    isAdult: boolean;
+    children: boolean;
     date: Date;
 }
 
@@ -33,7 +33,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   
  
 
-const Element: React.FC<ElementProps> = ({title, id, isAdult, date}) => {
+const Element: React.FC<ElementProps> = ({title, id, children: isAdult, date}) => {
     
     return (
 
@@ -41,7 +41,7 @@ const Element: React.FC<ElementProps> = ({title, id, isAdult, date}) => {
               <StyledTableCell component="th" scope="row">
                 {title}
               </StyledTableCell>
-              <StyledTableCell align="right">{isAdult}</StyledTableCell>
+              <StyledTableCell align="right">{(isAdult) ? "Tiene hijos." : "No tiene hijos."}</StyledTableCell>
               <StyledTableCell align="right">{date.toISOString()}</StyledTableCell>
             </StyledTableRow>
     )

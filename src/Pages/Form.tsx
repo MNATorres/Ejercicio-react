@@ -16,14 +16,14 @@ import "react-datepicker/dist/react-datepicker.css";
 type User = { text: string; value: boolean; id: number; date: Date };
 type UserFormData = {
   name: string;
-  isAdult: boolean;
+  children: boolean;
   date: Date | null;
 };
 
 export default function Form() {
   const [formData, setFormData] = useState<UserFormData>({
     name: "",
-    isAdult: false,
+    children: false,
     date: null
   });
 
@@ -34,7 +34,7 @@ export default function Form() {
   };
 
   let handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, isAdult: e.currentTarget.checked });
+    setFormData({ ...formData, children: e.currentTarget.checked });
   };
 
   let handleDateChange = (newDate: Date | null) => {
@@ -42,19 +42,20 @@ export default function Form() {
   };
 
   let handleAdd = () => {
-    if (!formData.date) return;
+    if (!formData.date) return alert("Debe completar la fecha");
+    if (formData.name.length < 1) return alert("Debe completar el nombre");
     setList([
       ...list,
       {
         text: formData.name,
         id: Math.random(),
-        value: formData.isAdult,
+        value: formData.children,
         date: formData.date
       }
     ]);
     setFormData({
       name: "",
-      isAdult: false,
+      children: false,
       date: null
     });
   };
@@ -73,15 +74,7 @@ export default function Form() {
     }
   }));
 
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover
-    },
-    // hide last border
-    "&:last-child td, &:last-child th": {
-      border: 0
-    }
-  }));
+  
 
   return (
     <div className="form">
@@ -100,14 +93,15 @@ export default function Form() {
         <div>
           <input
             onChange={handleCheckboxChange}
-            checked={formData.isAdult}
+            checked={formData.children}
             type="checkbox"
             name="edad"
           />
-          <p>Es mayor de edad?</p>
+          <p>¿Tiene Hijos?</p>
         </div>
         <div>
           <DatePicker
+            placeholderText="Choose a date..."
             selected={formData.date}
             onChange={handleDateChange}
           />
@@ -118,21 +112,21 @@ export default function Form() {
       </form>
       <div className="dataForm">
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <Table sx={{ minWidth: 700, maxWidth: 800 }} aria-label="customized table">
             <TableHead>
               <TableRow>
                 <StyledTableCell>NOMBRE</StyledTableCell>
                 <StyledTableCell align="right">
-                  ¿ES MAYOR DE EDAD?
+                  ¿TIENE HIJOS?
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   FECHA DE NACIMIENTO
                 </StyledTableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody sx={{maxWidth: 800 }} >
               {list.map(({ text, id, value, date}) => {
-                return <Element title={text} id={id} isAdult={value} date={date} />;
+                return <Element title={text} id={id} children={value} date={date} />;
               })}
             </TableBody>
           </Table>
